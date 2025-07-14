@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// @route   GET /api/users
-// @desc    Get all users
 router.get('/', async (req, res) => {
   try {
     const users = await User.find();
@@ -13,8 +11,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   POST /api/users
-// @desc    Add a new user
+
 router.post('/', async (req, res) => {
   const { name } = req.body;
   try {

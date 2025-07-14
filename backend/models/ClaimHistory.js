@@ -17,7 +17,5 @@ const ClaimHistorySchema = new Schema({
   },
 });
 
-// arshlank894
-// b4RBZ7jhASUTg42j
 
 module.exports = mongoose.model('ClaimHistory', ClaimHistorySchema);

@@ -3,15 +3,14 @@ import axios from 'axios';
 import './App.css';
 import { FaCrown, FaGift, FaTrophy } from 'react-icons/fa';
 
-// --- Configuration ---
-// Replace with your actual backend URL
+
 const API_URL = import.meta.env.VITE_API_BASE_URL;
-// Placeholder for user avatars
+
 const getAvatarUrl = (name) => `https://api.dicebear.com/8.x/initials/svg?seed=${name}&backgroundColor=00897b,d81b60,8e24aa,3949ab&radius=50`;
 
 
 function App() {
-  // --- State Management ---
+
   const [users, setUsers] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
   const [history, setHistory] = useState([]);
@@ -20,12 +19,10 @@ function App() {
   const [lastClaimed, setLastClaimed] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // --- Data Fetching Effect ---
   useEffect(() => {
     const fetchInitialData = async () => {
       setIsLoading(true);
       try {
-        // Fetch all data in parallel for faster loading
         const [usersRes, leaderboardRes, historyRes] = await Promise.all([
           axios.get(`${API_URL}/users`),
           axios.get(`${API_URL}/leaderboard`),
@@ -49,9 +46,9 @@ function App() {
     };
 
     fetchInitialData();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []); 
 
-  // --- Helper Functions ---
+
   const fetchUsers = async () => {
     const res = await axios.get(`${API_URL}/users`);
     setUsers(res.data);
@@ -67,7 +64,6 @@ function App() {
     setHistory(res.data);
   };
 
-  // --- Event Handlers ---
   const handleAddUser = async (e) => {
     e.preventDefault();
     if (!newUser.trim()) return;
@@ -89,24 +85,23 @@ function App() {
       const updatedLeaderboard = res.data;
       setLeaderboard(updatedLeaderboard);
 
-      // Find points difference to show a message
+
       const claimedUser = updatedLeaderboard.find(u => u._id === selectedUser);
       const originalUser = originalLeaderboard.find(u => u._id === selectedUser);
       const pointsDiff = claimedUser.points - (originalUser?.points || 0);
       setLastClaimed(`${claimedUser.name} claimed ${pointsDiff} points!`);
-      setTimeout(() => setLastClaimed(null), 3000); // Message disappears after 3s
+      setTimeout(() => setLastClaimed(null), 3000); 
 
-      await fetchHistory(); // Refresh history
+      await fetchHistory(); 
     } catch (error) {
       console.error('Failed to claim points', error);
     }
   };
 
-  // --- Render Logic ---
   const topThree = leaderboard.slice(0, 3);
   const restOfLeaderboard = leaderboard.slice(3);
 
-  // Reorder topThree for podium display: [2nd, 1st, 3rd]
+
   const podiumOrder = [topThree.find(u => u.rank === 2), topThree.find(u => u.rank === 1), topThree.find(u => u.rank === 3)];
 
   if (isLoading) {
@@ -116,7 +111,6 @@ function App() {
   return (
     <div className="app-container">
       <div className="leaderboard-container">
-        {/* Header Section */}
         <header className="leaderboard-header">
           <div className="header-tabs">
             <button className="tab active">Weekly</button>
@@ -126,10 +120,9 @@ function App() {
         
         </header>
 
-        {/* Podium for Top 3 */}
         <div className="podium">
           {podiumOrder.map((user, index) => {
-            if (!user) return <div key={`placeholder-${index}`} className="podium-user"></div>; // Placeholder if rank doesn't exist
+            if (!user) return <div key={`placeholder-${index}`} className="podium-user"></div>; 
             const isFirst = user.rank === 1;
             return (
               <div key={user._id} className={`podium-user rank-${user.rank}`}>
@@ -148,7 +141,6 @@ function App() {
           })}
         </div>
 
-        {/* Leaderboard List for Others */}
         <ul className="leaderboard-list">
           {restOfLeaderboard.map(user => (
             <li key={user._id} className="list-item">
@@ -163,7 +155,6 @@ function App() {
         </ul>
       </div>
 
-      {/* Controls and History Section */}
       <div className="controls-history-container">
         <div className="controls-card">
           <h2>Controls</h2>

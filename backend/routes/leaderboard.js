@@ -11,8 +11,6 @@ const updateRanks = async () => {
   }
 };
 
-// @route   POST /api/claim
-// @desc    Claim points for a user
 router.post('/claim', async (req, res) => {
   const { userId } = req.body;
   const randomPoints = Math.floor(Math.random() * 10) + 1;
@@ -48,8 +46,6 @@ router.post('/claim', async (req, res) => {
   }
 });
 
-// @route   GET /api/leaderboard
-// @desc    Get the leaderboard
 router.get('/leaderboard', async (req, res) => {
   try {
     await updateRanks(); // Ensure ranks are up-to-date
@@ -61,8 +57,6 @@ router.get('/leaderboard', async (req, res) => {
 });
 
 
-// @route   GET /api/history
-// @desc    Get all claim history
 router.get('/history', async (req, res) => {
     try {
         const history = await ClaimHistory.find().populate('userId', 'name').sort({ timestamp: -1 });
