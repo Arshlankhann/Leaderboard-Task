@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect("mongodb+srv://arshlank894:b4RBZ7jhASUTg42j@leaderboardtask.jt9zm9r.mongodb.net/leaderboard?retryWrites=true&w=majority&appName=LeaderboardTask", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
