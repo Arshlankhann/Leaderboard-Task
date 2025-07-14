@@ -5,7 +5,7 @@ import { FaCrown, FaGift, FaTrophy } from 'react-icons/fa';
 
 // --- Configuration ---
 // Replace with your actual backend URL
-const API_URL = 'http://localhost:5000/api'; 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 // Placeholder for user avatars
 const getAvatarUrl = (name) => `https://api.dicebear.com/8.x/initials/svg?seed=${name}&backgroundColor=00897b,d81b60,8e24aa,3949ab&radius=50`;
 
